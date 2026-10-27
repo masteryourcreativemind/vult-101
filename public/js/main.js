@@ -128,7 +128,23 @@ function renderPanel() {
             panel.append(row);
         }
     } else if (activeTab === 'jobs') {
-        if (!state.tasks.length) empty('No commissioned work', label(state.campaign.state), 'clipboard-list');
+        if (mode !== 'sim') {
+            const heading = element('div', 'research-orders-heading');
+            heading.append(element('strong', '', 'RESEARCH ORDERS'));
+            const createButton = element('button', 'button quiet', 'New order');
+            createButton.type = 'button';
+            createButton.addEventListener('click', openResearchOrder);
+            heading.append(createButton);
+            panel.append(heading);
+            if (!state.researchOrders.length) empty('No research orders', 'Create an order to queue five independent researcher tasks.', 'clipboard-list');
+            for (const order of state.researchOrders) {
+                const submitted = order.assignments.filter(assignment => assignment.submitted).length;
+                const synthesisStatus = order.synthesis ? ` / SYNTHESIS ${label(order.synthesis.status)} / REVISION ${order.synthesis.revision}` : '';
+                const row = element('div', 'entry-row research-order-row');
+                row.append(element('strong', '', order.topic), element('span', '', `${label(order.status)} / ${submitted} OF 5 PACKETS${synthesisStatus}`), element('span', '', order.question));
+                panel.append(row);
+            }
+        }
         for (const task of state.tasks) {
             const row = element('div', 'entry-row');
             row.append(element('strong', '', task.title), element('span', '', `${task.state} / ${roomName(task.facility)}`), element('span', '', `${task.workerId ?? 'UNASSIGNED'} / ATTEMPT ${task.attempts}`));
@@ -270,6 +286,25 @@ async function savePermissionDecision(decision) {
 byId('close-permission').addEventListener('click', () => byId('permission-dialog').close());
 byId('permission-approve').addEventListener('click', () => savePermissionDecision('APPROVE'));
 byId('permission-decline').addEventListener('click', () => savePermissionDecision('DECLINE'));
+
+function openResearchOrder() {
+    byId('research-topic').value = '';
+    byId('research-question').value = '';
+    byId('research-order-dialog').showModal();
+    byId('research-topic').focus();
+}
+
+byId('close-research-order').addEventListener('click', () => byId('research-order-dialog').close());
+byId('create-research-order').addEventListener('click', async () => {
+    const button = byId('create-research-order');
+    button.disabled = true;
+    try {
+        await request('/api/research/orders', { topic: byId('research-topic').value, question: byId('research-question').value });
+        byId('research-order-dialog').close();
+        notice('Research order queued. Five distinct tasks were created; no worker inference or API access occurred.');
+    } catch (error) { notice(error.message); }
+    finally { button.disabled = false; }
+});
 
 for (const tab of document.querySelectorAll('[data-tab]')) {
     tab.addEventListener('click', () => {

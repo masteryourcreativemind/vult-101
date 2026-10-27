@@ -25,6 +25,7 @@ No configuration file or account is required to inspect the console. Optional la
 - Roster selection, tasks, cash ledger, exact-version approval display, event log, and class instruction editor.
 - SQLite persistence, task leases, session generations, station locks, two-action concurrency limit, budget reservations, append-only cash entries, and durable external-operation records.
 - Connector permission requests now show the access being sought and store an explicit local owner decision. This does not grant provider OAuth/API access or unlock live execution.
+- The Tasks view can queue a research order as five distinct researcher tasks; evidence packets, immutable synthesis, independent reviews, and one-revision rules are enforced. No AI workers or research APIs are connected yet.
 - A* movement and deterministic kitchen recovery primitives, covered by isolated tests. With no live agent scheduler, workers correctly remain idle in the application.
 - Local HTTP/SSE boundary, revision-protected instruction saves, trial Stop, and campaign Emergency Suspend. The browser cannot start work, move workers, raise budgets, or add income.
 

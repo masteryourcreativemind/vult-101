@@ -9,7 +9,7 @@ export function openStore(filename = ':memory:') {
     if (filename !== ':memory:') chmodSync(filename, 0o600);
     database.exec('PRAGMA foreign_keys = ON; PRAGMA busy_timeout = 5000; PRAGMA journal_mode = WAL; PRAGMA synchronous = FULL;');
     const version = database.prepare('PRAGMA user_version').get().user_version;
-    if (version > 5) {
+    if (version > 7) {
         database.close();
         throw new Error('Database belongs to a newer application version.');
     }
@@ -143,6 +143,42 @@ export function openStore(filename = ':memory:') {
 				decided_at TEXT NOT NULL
 			) STRICT;
 			PRAGMA user_version = 5;
+			COMMIT;
+		`);
+    }
+    if (version < 6) {
+        database.exec(`
+			BEGIN IMMEDIATE;
+			CREATE TABLE research_orders (
+				id TEXT PRIMARY KEY,
+				topic TEXT NOT NULL,
+				question TEXT NOT NULL,
+				status TEXT NOT NULL CHECK (status IN ('COLLECTING', 'PACKETS_COMPLETE', 'BLOCKED')),
+				created_at TEXT NOT NULL
+			) STRICT;
+			CREATE TABLE research_assignments (
+				order_id TEXT NOT NULL REFERENCES research_orders(id),
+				task_id TEXT NOT NULL UNIQUE REFERENCES tasks(id),
+				worker_id TEXT NOT NULL REFERENCES workers(id),
+				artifact_id TEXT UNIQUE REFERENCES artifacts(id),
+				PRIMARY KEY(order_id, worker_id),
+				UNIQUE(order_id, task_id)
+			) STRICT;
+			PRAGMA user_version = 6;
+			COMMIT;
+		`);
+    }
+    if (version < 7) {
+        database.exec(`
+			BEGIN IMMEDIATE;
+			CREATE TABLE research_syntheses (
+				order_id TEXT PRIMARY KEY REFERENCES research_orders(id),
+				artifact_id TEXT NOT NULL UNIQUE REFERENCES artifacts(id),
+				revision INTEGER NOT NULL CHECK (revision IN (1, 2)),
+				review_status TEXT NOT NULL CHECK (review_status IN ('IN_REVIEW', 'REVISION_REQUIRED', 'ACCEPTED', 'BLOCKED')),
+				updated_at TEXT NOT NULL
+			) STRICT;
+			PRAGMA user_version = 7;
 			COMMIT;
 		`);
     }

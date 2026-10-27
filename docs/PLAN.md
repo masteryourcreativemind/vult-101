@@ -17,9 +17,11 @@ AI NOTE: The user authorized implementation after planning. Checked items descri
 
 ## 2. Embodied Collective Work
 
-- [ ] Server-authored ResearchOrder, distinct task-scoped scientist contexts, and task-specific action allowlists.
+- [x] Server-authored research orders, five fixed researcher assignments, and evidence packet provenance validation/isolated submission.
+- [x] Immutable synthesis artifacts, two non-author reviews including the verifier, and an at-most-one-revision acceptance/block state machine.
+- [ ] Distinct task-scoped scientist contexts and task-specific action allowlists.
 - [ ] Five blind initial evidence packets: source/time/observations/sample/method/limitations, with inference distinguished from actual measurements.
-- [ ] Immutable synthesis by researcher 1; two non-author reviewers including skeptical verifier; at most one revision, then accepted or blocked.
+- [ ] Execute synthesis/review through isolated model sessions and provide authenticated, task-scoped packet access; current state-machine tests use synthetic fixtures only.
 - [ ] Room-authorized artifact reads and acknowledged exact-version physical marketing handoff.
 - [ ] Dependency workflow through marketing brief, two design proposals, fabrication, inspection, draft, approval, accounting, and lessons.
 - [ ] Watchdog for invalid/repeating intents, progress/deadline limits, actual context reset, one replacement, then blocked task. Connector outages must not trigger replacement storms.

@@ -35,6 +35,8 @@ export function createTasks(store, { clock = () => new Date(), leaseMs = 180000 
                 const task = get(id);
                 const worker = database.prepare('SELECT * FROM workers WHERE id = ?').get(workerId);
                 const campaign = database.prepare('SELECT * FROM campaign WHERE id = 1').get();
+                const assignment = database.prepare('SELECT worker_id FROM research_assignments WHERE task_id = ?').get(id);
+                if (assignment && assignment.worker_id !== workerId) throw new Error('Research assignment belongs to another researcher.');
                 if (campaign.state !== 'RUNNING') throw new Error('Campaign is not running.');
                 if (!task || !worker || task.class !== worker.class || !['IDLE', 'WORKING'].includes(worker.status)) throw new Error('Worker cannot claim this task.');
                 if (task.state !== 'QUEUED' || task.attempts >= 3) throw new Error('Task is already claimed or retry budget is exhausted.');

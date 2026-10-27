@@ -38,7 +38,7 @@ AI NOTE: Contributor memory; keep implementation status accurate and distinguish
 - SQLite migrations/transactions, persistent control state, task leases/generations, station occupancy, budget reservations, immutable cash ledger, approval hashes, and operation journal.
 - Fifteen rooms, 36 connected workstations, 16 seeded bodies, A* movement, and deterministic physical kitchen escort/recovery state.
 - Loopback-only HTTP and SSE, static asset confinement, origin/session-token protections, revision-checked atomic instruction editor, trial/campaign suspension controls.
-- Version 5 SQLite migration and authenticated connector permission requests; local owner approval is setup intent only and never grants provider access or execution authority.
+- Version 7 SQLite migrations persist connector permission decisions and research order/review state; owner approval is setup intent only. Five distinct researcher assignments, provenance-validated packets, immutable synthesis, verifier/non-author reviews, and a one-revision limit are implemented. Model sessions, task-scoped packet delivery, and live research remain unimplemented.
 - Operational Canvas console with roster, tasks, ledger, approvals, log, original raster sprites, and honest unconnected-system status. No fake work animation or money.
 
 ## Pending Before Live Work

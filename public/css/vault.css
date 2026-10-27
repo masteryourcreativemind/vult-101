@@ -492,6 +492,38 @@ canvas {
 	min-height: 32px;
 	margin-top: 2px
 }
+.research-orders-heading {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 10px 0;
+	border-bottom: 1px solid var(--line);
+	color: var(--muted);
+	font-size: 9px
+}
+.research-order-row {
+	grid-template-columns: minmax(0, 1fr) auto
+}
+.research-order-row > strong {
+	overflow-wrap: anywhere
+}
+.research-order-row > span:last-child {
+	grid-column: 1 / -1;
+	color: var(--muted);
+	font-size: 10px;
+	line-height: 1.6;
+	overflow-wrap: anywhere
+}
+.research-question {
+	height: 120px !important;
+	min-height: 120px !important
+}
+.research-order-warning {
+	margin: 0 24px;
+	font-size: 11px;
+	line-height: 1.7
+}
 .permission-dialog > p,
 .permission-dialog > strong,
 .permission-dialog > ul,
@@ -1059,6 +1091,9 @@ select {
 	}
 	.permission-dialog .confirmation-actions {
 		justify-content: stretch
+	}
+	.research-order-warning {
+		margin: 0 16px
 	}
 	.dialog-heading {
 		padding: 16px

@@ -92,6 +92,16 @@
 		<div class="confirmation-actions"><button id="permission-decline" class="button quiet">Decline</button><button id="permission-approve" class="button primary">Approve setup request</button></div>
 	</dialog>
 
+	<dialog id="research-order-dialog" class="terminal-dialog" aria-labelledby="research-order-title">
+		<div class="dialog-heading"><div><span class="eyebrow">SERVER-AUTHORED WORKFLOW</span><h2 id="research-order-title">New research order</h2></div><button id="close-research-order" class="icon-button" title="Close research order" aria-label="Close research order"><img src="/vendor/icons/x.svg" alt=""></button></div>
+		<div class="sim-form">
+			<label>TOPIC<input id="research-topic" maxlength="120" autocomplete="off"></label>
+			<label>RESEARCH QUESTION<textarea id="research-question" class="research-question" maxlength="1000"></textarea></label>
+		</div>
+		<p class="research-order-warning">Creates five distinct queued researcher tasks. No AI or API calls run; execution remains locked until its separate commissioning gates pass.</p>
+		<div class="editor-footer"><span>FIVE INDEPENDENT WORKER ASSIGNMENTS</span><div><button id="create-research-order" class="button primary"><img src="/vendor/icons/plus.svg" alt="">Create order</button></div></div>
+	</dialog>
+
 	<dialog id="sim-setup" class="terminal-dialog" aria-labelledby="sim-setup-title">
 		<div class="dialog-heading"><div><span class="eyebrow">FAKE MONEY / REAL LIST PRICES</span><h2 id="sim-setup-title">New simulation</h2></div><button id="close-sim-setup" class="icon-button" title="Close" aria-label="Close simulation setup"><img src="/vendor/icons/x.svg" alt=""></button></div>
 		<div class="sim-form">

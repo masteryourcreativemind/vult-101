@@ -27,6 +27,26 @@ test('local snapshot reports real setup state without task capabilities or secre
     assert.equal((await fetch(`${url}/api/health`)).status, 200);
 });
 
+test('research orders require the operator token and queue five distinct tasks without starting work', async context => {
+    const { url, headers, bootstrap } = await fixture(context);
+    const path = `${url}/api/research/orders`;
+    assert.deepEqual(await (await fetch(path)).json(), []);
+    const body = JSON.stringify({ topic: 'Planner demand', question: 'Which features appear in current planners?' });
+    assert.equal((await fetch(path, { method: 'POST', headers: { Origin: url, 'Content-Type': 'application/json' }, body })).status, 403);
+    assert.equal((await fetch(path, { method: 'POST', headers, body: JSON.stringify({ topic: 'Planner demand', question: 'Question', budgetCents: 500 }) })).status, 400);
+
+    const created = await fetch(path, { method: 'POST', headers, body });
+    assert.equal(created.status, 201);
+    const order = await created.json();
+    assert.equal(order.assignments.length, 5);
+    assert.equal(new Set(order.assignments.map(item => item.researcherId)).size, 5);
+    const state = await (await fetch(`${url}/api/state`)).json();
+    assert.equal(state.tasks.length, 5);
+    assert.equal(state.tasks.every(task => task.state === 'QUEUED'), true);
+    assert.equal(state.campaign.state, 'SETUP');
+    assert.equal(state.connectors.every(connector => !connector.ready), true);
+});
+
 test('cross-origin commands, missing tokens, arbitrary configuration, and live starts are rejected', async context => {
     const { url, headers } = await fixture(context);
     const body = JSON.stringify({ action: 'suspend' });

@@ -23,7 +23,7 @@ async function readJSON(request) {
     return body;
 }
 
-export function createRoutes({ snapshot, csrfToken, instructions, approvals, permissions, control, gate, hub, notify, instructionSaved, game }) {
+export function createRoutes({ snapshot, csrfToken, instructions, approvals, permissions, research, control, gate, hub, notify, instructionSaved, game }) {
     return async function route(request, response) {
         response.setHeader('X-Content-Type-Options', 'nosniff');
         response.setHeader('Referrer-Policy', 'no-referrer');
@@ -58,6 +58,12 @@ export function createRoutes({ snapshot, csrfToken, instructions, approvals, per
                     notify();
                     return sendJSON(response, 200, { campaign: control.get() });
                 }
+                if (pathname === '/api/research/orders') {
+                    if (Object.keys(body).some(key => !['topic', 'question'].includes(key))) throw Object.assign(new Error('Unexpected research order fields.'), { status: 400 });
+                    const order = research.createOrder(body);
+                    notify();
+                    return sendJSON(response, 201, order);
+                }
                 const permission = /^\/api\/permissions\/([a-z]+)$/.exec(pathname);
                 if (permission) {
                     if (Object.keys(body).some(key => key !== 'decision')) throw Object.assign(new Error('Unexpected permission fields.'), { status: 400 });
@@ -84,6 +90,7 @@ export function createRoutes({ snapshot, csrfToken, instructions, approvals, per
             }
             if (pathname === '/api/bootstrap') return sendJSON(response, 200, { token: csrfToken, state: snapshot() });
             if (pathname === '/api/state') return sendJSON(response, 200, snapshot());
+            if (pathname === '/api/research/orders') return sendJSON(response, 200, research.list());
             if (pathname === '/api/health') return sendJSON(response, 200, { ok: true, state: control.get().state });
             if (pathname === '/events') return hub.subscribe(request, response, snapshot());
             if (pathname === '/api/game/estimate') {
