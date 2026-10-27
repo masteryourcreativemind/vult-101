@@ -1,0 +1,1 @@
+// AI NOTE: Base dweller brain. buildObservation(dweller) -> JSON (location, order, inventory, nearby lockers, last result/rejection, energy, budget left, facility list with which actions each allows FOR THIS CLASS). decide() -> llm call with schema llm/schemas.js#intent -> validate -> return intent. Strikes on invalid output.

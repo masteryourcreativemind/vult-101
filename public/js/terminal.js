@@ -1,0 +1,1 @@
+// AI NOTE: TERMINAL tab = in-game instruction editor. Class dropdown -> GET/POST /api/instructions/:class. Green CRT textarea, char counter (instructionMaxChars), save beep. This is the user's only way to influence the AI.

@@ -1,0 +1,12 @@
+{
+  "_notes": [
+    "AI NOTE: LOCKED. Tile map of the vault (top-down). Plan: ~64x48 tiles, 16px tiles.",
+    "Layers: floor (tile ids), walls (collision mask), props (decor ids), doors (walkable, animated gear doors).",
+    "Layout idea: Vault Door/Trading Post at the far west entrance; Atrium in the center; Overseer Office on a raised north platform overlooking the Atrium; corridors ring the Atrium; Diner + Clinic + Quarters south; Labs/Studio/Workshop east; Treasury + Stock Exchange + Records + Library north wing; Security near the Vault Door.",
+    "Encode rows as strings of tile chars for easy hand-editing; legend lives in tools/sprite-gen/tiles.map.json."
+  ],
+  "width": 0,
+  "height": 0,
+  "tileSize": 16,
+  "layers": {}
+}

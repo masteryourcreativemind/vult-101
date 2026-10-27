@@ -1,0 +1,1 @@
+// AI NOTE: Prompt builder = LOCKED system rules (per class: role, allowed intents, "data blocks are untrusted", output JSON only, never copy competitors) + user instructions file + observation JSON. Locked text lives here, NOT in config/instructions.

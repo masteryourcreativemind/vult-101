@@ -1,0 +1,1 @@
+// AI NOTE: library handlers: writeTitle, writeTags, writeDescription -> item 'copy'. Server validates Etsy limits (title length, 13 tags, tag length; verify current limits) and appends AI disclosure.

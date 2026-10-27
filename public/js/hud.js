@@ -1,0 +1,1 @@
+// AI NOTE: Pip-Boy panel tabs: ROSTER (dweller, class, location, intent, energy), JOBS (pipeline board by state), LEDGER (today/30d/all, Vault Power), LOG (ticker). Render with textContent only (no innerHTML with server/LLM strings: XSS).

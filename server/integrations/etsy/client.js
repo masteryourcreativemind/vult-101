@@ -1,0 +1,1 @@
+// AI NOTE: Base request: https://openapi.etsy.com/v3/application + headers x-api-key "<keystring>:<shared_secret>" and Bearer token. Request queue with rate limiting from response headers; retry 429. Multipart helper (FormData/Blob, built-in) for uploads. Mode guard: block writes outside LIVE.

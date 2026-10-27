@@ -1,0 +1,1 @@
+// AI NOTE: Writes: createDraftListing POST /shops/{shop_id}/listings (type=download, who_made, when_made, taxonomy_id, price, quantity, title, description, tags — verify required fields), uploadListingImage POST .../listings/{id}/images, uploadListingFile POST .../listings/{id}/files, publish via updateListing state=active (verify endpoint), getListing stats.

@@ -1,0 +1,1 @@
+// AI NOTE: Facility lockers = physical item handoff. deposit(dweller, itemId) / pickup(dweller, itemId) require being at that facility. Items: {id, type: signal|concept|artwork|pack|price|copy|verdict|draft, jobId, payloadRef}. Payload files live in data/products/<jobId>/.

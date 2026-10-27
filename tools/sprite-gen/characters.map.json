@@ -1,0 +1,8 @@
+{
+  "_notes": [
+    "AI NOTE: Dweller base body frames (top-down: hair/head circle, shoulders, jumpsuit blue w/ yellow stripe + '101' on back when facing N). 4 dirs x idle2/walk4/work2/rest1/hurt1.",
+    "Accessory layers per class id (glasses, beret, helmet, visor, goggles, tie, apron, cardigan, sunglasses, clipboard, briefcase...)."
+  ],
+  "base": {},
+  "accessories": {}
+}

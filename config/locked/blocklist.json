@@ -1,0 +1,9 @@
+{
+  "_notes": [
+    "AI NOTE: LOCKED. Inspector hard blocklist (case-insensitive, word-boundary). Seed with categories, not a full list: major brands, franchises/characters, sports leagues/teams, celebrities, 'Fallout', 'Vault-Tec', 'Vault Boy', 'Disney', 'Pokemon', 'Marvel', 'NFL', 'Nike', etc.",
+    "Also phrases: 'inspired by', 'dupe', 'replica', 'official', medical/health claims.",
+    "LLM inspector judgment is ADDITIONAL; a blocklist hit always rejects."
+  ],
+  "terms": [],
+  "phrases": []
+}

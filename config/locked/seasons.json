@@ -1,0 +1,7 @@
+{
+  "_notes": [
+    "AI NOTE: LOCKED. Seasonal calendar the Researcher uses for lead time (digital goods sell ~4-8 weeks before events).",
+    "Shape: {id, name, date or month/day, leadDays, themes:[...]}"
+  ],
+  "seasons": []
+}

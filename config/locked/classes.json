@@ -1,0 +1,16 @@
+{
+  "_notes": ["AI NOTE: Fixed 16-body roster. Visible bodies are not continuous model requests."],
+  "classes": [
+    {"id":"overseer","home":"overseer_office","team":"command","names":["The Overseer"]},
+    {"id":"researcher","home":"comms_lab","team":"research","names":["Ada / Demand","Lin / Competition","Ivo / Pricing","Sage / Seasons","Kit / Verification"]},
+    {"id":"trendsetter","home":"diner","team":"marketing","names":["Mara"]},
+    {"id":"creative","home":"art_studio","team":"design","names":["June","Otto"]},
+    {"id":"fabricator","home":"workshop","team":"design","names":["Dex"]},
+    {"id":"wallstreet","home":"stock_exchange","team":"marketing","names":["Penn"]},
+    {"id":"copywriter","home":"library","team":"marketing","names":["Wren"]},
+    {"id":"inspector","home":"security","team":"quality","names":["Vale"]},
+    {"id":"shopkeeper","home":"trading_post","team":"operations","names":["Sol"]},
+    {"id":"accountant","home":"treasury","team":"finance","names":["Bea"]},
+    {"id":"archivist","home":"records","team":"knowledge","names":["Ash"]}
+  ]
+}

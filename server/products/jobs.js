@@ -1,0 +1,1 @@
+// AI NOTE: Job board: create/get/update jobs; state machine per docs/ARCHITECTURE.md (illegal transitions throw). Job: {id, niche, productType, state, items:{...}, costs, etsyListingId, history[]}. Folder data/products/<id>/.

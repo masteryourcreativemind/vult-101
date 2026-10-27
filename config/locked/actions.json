@@ -1,0 +1,8 @@
+{
+  "_notes": [
+    "AI NOTE: LOCKED. Action registry used by sim/actionGate.js and agents/toolRegistry.js.",
+    "Shape per action: {id, facility, classes:[...], needsItem?: itemType, producesItem?: itemType, jobStateFrom:[...], jobStateTo, external: 'none'|'read'|'write', paid: bool, needsApproval?: bool, handler: 'actions/<file>.js#fn'}",
+    "Fill from the table in docs/GAME_RULES.md. 'external:write' actions are no-ops in DRY and stubs in SIM."
+  ],
+  "actions": []
+}

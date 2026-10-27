@@ -1,0 +1,6 @@
+{
+  "_notes": [
+    "AI NOTE: LOCKED. Non-secret budget/limits. Hard caps also come from .env (env wins if lower).",
+    "Fields to add: decisionMinIntervalSec per brain, overseerCycleSec, maxTokensPerDecision, hireRoiThreshold7d, maxDwellersPerClass, maxImagesPerProduct, maxActiveJobs, instructionMaxChars."
+  ]
+}

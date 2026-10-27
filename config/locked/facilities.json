@@ -1,0 +1,20 @@
+{
+  "_notes": ["AI NOTE: Locked room geometry. Stations and wall openings are derived deterministically from these zones."],
+  "facilities": [
+    {"id":"overseer_office","name":"COMMAND","x":2,"y":2,"w":24,"h":9,"seats":1,"color":"#d7b66b"},
+    {"id":"comms_lab","name":"RESEARCH LAB","x":27,"y":2,"w":24,"h":9,"seats":5,"color":"#8cb9b1"},
+    {"id":"diner","name":"MARKETING","x":52,"y":2,"w":24,"h":9,"seats":3,"color":"#dd9b75"},
+    {"id":"art_studio","name":"DESIGN STUDIO","x":2,"y":13,"w":24,"h":9,"seats":2,"color":"#c4a4bb"},
+    {"id":"workshop","name":"FABRICATION","x":27,"y":13,"w":24,"h":9,"seats":1,"color":"#d2ac77"},
+    {"id":"stock_exchange","name":"PRICING","x":52,"y":13,"w":24,"h":9,"seats":1,"color":"#a5b883"},
+    {"id":"library","name":"COPY LIBRARY","x":2,"y":24,"w":24,"h":9,"seats":1,"color":"#b4c2c4"},
+    {"id":"security","name":"INSPECTION","x":27,"y":24,"w":24,"h":9,"seats":1,"color":"#cf9489"},
+    {"id":"trading_post","name":"ETSY OPERATIONS","x":52,"y":24,"w":24,"h":9,"seats":1,"color":"#d1b279"},
+    {"id":"treasury","name":"ACCOUNTING","x":2,"y":35,"w":24,"h":9,"seats":1,"color":"#a3b88a"},
+    {"id":"records","name":"ARCHIVE","x":27,"y":35,"w":24,"h":9,"seats":1,"color":"#b1ad99"},
+    {"id":"kitchen_break_room","name":"RECOVERY KITCHEN","x":52,"y":35,"w":24,"h":9,"seats":3,"color":"#d8bb8e"},
+    {"id":"clinic","name":"CLINIC","x":2,"y":46,"w":24,"h":9,"seats":1,"color":"#b9c2ba"},
+    {"id":"quarters","name":"QUARTERS","x":27,"y":46,"w":24,"h":9,"seats":3,"color":"#b6a7a0"},
+    {"id":"atrium","name":"ATRIUM","x":52,"y":46,"w":24,"h":9,"seats":3,"color":"#9eb6a5"}
+  ]
+}

@@ -1,0 +1,1 @@
+// AI NOTE: Research reads: findAllListingsActive GET /listings/active (keywords, sort_on score|created|price — sort only works with keywords, min/max_price, taxonomy_id, is_safe=true). Return trimmed fields only (title, tags, price, num_favorers, views, created) as UNTRUSTED data.

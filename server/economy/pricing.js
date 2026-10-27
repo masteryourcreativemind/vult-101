@@ -1,0 +1,1 @@
+// AI NOTE: Comps-based pricing: median/percentiles of comparable active listings; floor = listing fee + est. transaction/processing fees + avg AI cost per product + margin. Clamp to product-type defaultPriceRange.

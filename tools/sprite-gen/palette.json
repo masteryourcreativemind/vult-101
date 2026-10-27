@@ -1,0 +1,7 @@
+{
+  "_notes": [
+    "AI NOTE: Locked ~24-color palette from docs/ART_STYLE.md. Map single chars -> hex. Keep '.' transparent.",
+    "Groups: vault blue x3, vault yellow x2, steel x4, floor x2, CRT green x2, warning red, skin x3, hair x4, black, white."
+  ],
+  "colors": {}
+}

@@ -1,0 +1,1 @@
+// AI NOTE: OpenAI-compatible chat client (LLM_BASE_URL). chat({model, messages, schema}) -> {json, usage}. Structured output / tool calls; retry w/ backoff on 429/5xx; timeout. Every call goes through costMeter + killSwitch. In SIM mode route to llm/stub.js. Check provider docs via Context7 before coding.

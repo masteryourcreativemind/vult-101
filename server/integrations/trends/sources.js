@@ -1,0 +1,1 @@
+// AI NOTE: Trend source adapters with a common interface fetchSignals({query, since}) -> [{source, term, score, evidence}]. Start: etsySearchSource + seasonsSource (config/locked/seasons.json). Only add sources with official APIs/feeds and allowed ToS. All output = untrusted data.

@@ -1,0 +1,97 @@
+<!doctype html>
+<!-- AI NOTE: The browser displays server authority; it never runs workers or computes business approvals. -->
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#171c19">
+	<title>VULT-101 / Operations</title>
+	<link rel="icon" href="data:,">
+	<link rel="preload" href="/vendor/fonts/barlow-condensed-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+	<link rel="stylesheet" href="/css/vault.css">
+	<script type="module" src="/js/main.js"></script>
+</head>
+<body>
+	<header class="masthead">
+		<a class="brand" href="/" aria-label="VULT-101 operations"><span class="brand-mark">101</span><span><strong>VULT-101</strong><small>PRIVATE OPERATIONS</small></span></a>
+		<div class="session"><span class="connection-dot" id="connection-dot"></span><span id="connection">CONNECTING</span><span class="local-address">127.0.0.1</span></div>
+		<div class="operator-actions">
+			<span id="profile" class="profile">LIVE TRIAL</span>
+			<button id="mode-toggle" class="button quiet" title="Switch between the live console and the fake-money simulation"><img src="/vendor/icons/gamepad-2.svg" alt=""><span id="mode-label">Simulation</span></button>
+			<button id="open-terminal" class="button quiet" title="AI instructions"><img src="/vendor/icons/terminal.svg" alt=""><span>Instructions</span></button>
+			<button id="suspend" class="button danger" disabled><img src="/vendor/icons/square.svg" alt=""><span id="suspend-label">Stop trial</span></button>
+		</div>
+	</header>
+
+	<div id="notice" class="notice" role="alert" hidden></div>
+
+	<section id="sim-bar" class="sim-bar" aria-label="Simulation controls" hidden>
+		<span class="sim-badge">SIMULATION / FAKE MONEY</span>
+		<div class="sim-clock"><strong id="sim-date">No simulation</strong><span id="sim-status">Set up a run to begin</span></div>
+		<div class="sim-budget"><div class="metric-label"><span>MONTH SPEND</span><strong id="sim-spend">$0 / $0</strong></div><progress id="sim-spend-bar" max="1" value="0" aria-label="Monthly budget used"></progress><span id="sim-hold" class="subdued"></span></div>
+		<div class="sim-controls">
+			<button id="sim-play" class="icon-button" title="Run" aria-label="Run simulation"><img src="/vendor/icons/play.svg" alt=""></button>
+			<label class="sr-only" for="sim-speed">Speed</label><select id="sim-speed" aria-label="Simulation speed"></select>
+			<button id="sim-new" class="button quiet"><img src="/vendor/icons/flag.svg" alt="">New run</button>
+		</div>
+	</section>
+
+	<main>
+		<section class="campaign-band" aria-label="Campaign finances">
+			<div class="financial-primary"><span class="eyebrow">RECONCILED NET PROFIT</span><strong id="net-profit">$0.00</strong><span class="currency">USD / BEFORE PERSONAL TAX</span></div>
+			<div class="goal-block"><div class="metric-label"><span>MISSION TARGET</span><strong>$1,000,000</strong></div><progress id="goal-progress" max="1" value="0" aria-label="Net profit toward one million dollars"></progress><div class="metric-label subdued"><span id="goal-percent">0.0000%</span><span>REAL USD</span></div></div>
+			<div class="small-metric"><span class="eyebrow">AI CASH COST</span><strong id="ai-cost">$0.00</strong><small id="ai-allowance">Allowance locked</small></div>
+			<div class="small-metric"><span class="eyebrow">MARKETPLACE FEES</span><strong id="etsy-fees">$0.00</strong><small id="settled-count">0 settled entries</small></div>
+		</section>
+
+		<div class="operations-layout">
+			<section class="vault-section" aria-labelledby="vault-title">
+				<div class="section-heading"><div><span class="eyebrow">FACILITY OVERVIEW</span><h1 id="vault-title">Vault 101</h1></div><span class="state-badge" id="campaign-state">SETUP</span></div>
+				<div class="map-topline"><span><i class="status-square"></i><span id="body-count">16</span> PERSONNEL</span><span id="work-count">0 ACTIVE TASKS</span><span>SECTOR 01</span></div>
+				<div class="map-viewport" id="map-viewport"><canvas id="vault" width="936" height="684" role="img" aria-label="Aerial pixel floor plan of Vault 101"></canvas></div>
+				<div class="map-bottomline"><span id="map-location">CENTRAL FACILITY</span><span id="map-coordinates">78 x 57</span></div>
+				<div class="campaign-message"><img src="/vendor/icons/lock-keyhole.svg" alt=""><div><strong id="campaign-reason">Live integrations are not commissioned.</strong><span id="ready-count">0 / 4 launch checks ready</span></div><span class="section-number">01</span></div>
+				<section class="commissioning" aria-labelledby="commission-title"><div class="subheading"><h2 id="commission-title">Commissioning</h2><span>LIVE SYSTEMS</span></div><div id="connectors" class="connector-list"></div></section>
+			</section>
+
+			<section class="console-section" aria-label="Operations console">
+				<div class="console-title"><span><img src="/vendor/icons/activity.svg" alt="">OPERATIONS CONSOLE</span><span id="server-time">--:--:--</span></div>
+				<nav class="tabs" role="tablist" aria-label="Operations views">
+					<button role="tab" id="tab-roster" aria-selected="true" aria-controls="operations-panel" data-tab="roster">Roster <span id="roster-count">16</span></button>
+					<button role="tab" id="tab-jobs" aria-selected="false" aria-controls="operations-panel" data-tab="jobs">Tasks <span id="task-count">0</span></button>
+					<button role="tab" id="tab-ledger" aria-selected="false" aria-controls="operations-panel" data-tab="ledger">Ledger</button>
+					<button role="tab" id="tab-approvals" aria-selected="false" aria-controls="operations-panel" data-tab="approvals">Approvals <span id="approval-count">0</span></button>
+					<button role="tab" id="tab-log" aria-selected="false" aria-controls="operations-panel" data-tab="log">Log</button>
+				</nav>
+				<div id="operations-panel" class="operations-panel" role="tabpanel" aria-labelledby="tab-roster" tabindex="0"></div>
+				<div id="selection" class="selection" aria-live="polite"><img src="/vendor/icons/radio.svg" alt=""><div><strong>Standing by</strong><span>No worker selected</span></div></div>
+				<div class="console-foot"><span><i class="status-square"></i>LOCAL AUTHORITY</span><span>16 BODIES / 2 CALLS MAX</span></div>
+			</section>
+		</div>
+	</main>
+
+	<footer><span>VULT-101 <span class="subdued">/</span> AUTONOMOUS ENTERPRISE</span><span>USD ONLY <span class="subdued">/</span> NO PROJECTED REVENUE</span></footer>
+
+	<dialog id="terminal" class="terminal-dialog" aria-labelledby="terminal-title">
+		<div class="dialog-heading"><div><span class="eyebrow">BEHAVIOR CONFIGURATION</span><h2 id="terminal-title">AI Instructions</h2></div><button id="close-terminal" class="icon-button" title="Close instructions" aria-label="Close instructions"><img src="/vendor/icons/x.svg" alt=""></button></div>
+		<div class="editor-toolbar"><label for="instruction-class">CLASS</label><select id="instruction-class" aria-label="Instruction class"></select><span id="editor-state">Loading</span></div>
+		<label class="sr-only" for="instruction-text">Instructions</label><textarea id="instruction-text" spellcheck="false" maxlength="24000"></textarea>
+		<div class="editor-footer"><span id="character-count">0 / 24000</span><div><button id="reload-instructions" class="icon-button" title="Reload from disk" aria-label="Reload instructions"><img src="/vendor/icons/rotate-ccw.svg" alt=""></button><button id="save-instructions" class="button primary" disabled><img src="/vendor/icons/save.svg" alt="">Save instructions</button></div></div>
+	</dialog>
+
+	<dialog id="confirm-suspension" class="confirm-dialog" aria-labelledby="suspension-title"><span class="eyebrow">OPERATOR AUTHORIZATION</span><h2 id="suspension-title">Stop the live trial?</h2><div class="confirmation-actions"><button id="cancel-suspension" class="button quiet">Cancel</button><button id="confirm-stop" class="button danger"><img src="/vendor/icons/square.svg" alt="">Suspend execution</button></div></dialog>
+
+	<dialog id="sim-setup" class="terminal-dialog" aria-labelledby="sim-setup-title">
+		<div class="dialog-heading"><div><span class="eyebrow">FAKE MONEY / REAL LIST PRICES</span><h2 id="sim-setup-title">New simulation</h2></div><button id="close-sim-setup" class="icon-button" title="Close" aria-label="Close simulation setup"><img src="/vendor/icons/x.svg" alt=""></button></div>
+		<div class="sim-form">
+			<label>COMMANDER MODEL<select id="sim-commander"></select></label>
+			<label>WORKER MODEL<select id="sim-worker"></select></label>
+			<label>SUBSCRIPTION<select id="sim-plan"></select></label>
+			<label>MARKET SUCCESS RATE %<input id="sim-success" type="number" min="1" max="50" step="0.5"></label>
+			<label>MONTHLY BUDGET USD<input id="sim-budget" type="number" min="1" step="1"></label>
+			<label>SEED (OPTIONAL)<input id="sim-seed" type="number" step="1" placeholder="random"></label>
+		</div>
+		<div id="sim-estimate" class="sim-estimate" aria-live="polite"></div>
+		<div class="editor-footer"><span id="sim-prices">Prices</span><div><button id="sim-start" class="button primary" disabled><img src="/vendor/icons/play.svg" alt="">Start simulation</button></div></div>
+	</dialog>
+</html>

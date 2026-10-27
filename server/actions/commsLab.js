@@ -1,0 +1,1 @@
+// AI NOTE: comms_lab handlers: searchEtsy (integrations/etsy/search), sampleListings, scoreTrend (LLM over sanitized DATA), saveSignal -> item 'signal' in hand. Cache searches in data/cache/ (TTL) to respect Etsy limits.

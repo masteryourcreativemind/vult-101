@@ -1,0 +1,32 @@
+{
+	"_note": "AI NOTE: Game assumptions, not measured market data. Tune here; never present results as income predictions.",
+	"goalCents": 100000000,
+	"daysPerMonth": 30,
+	"ticksPerDayAtSpeed1": 60,
+	"maxParallelProducts": 3,
+	"baselineProductsPerMonth": 10,
+	"cacheRatio": 0.3,
+	"commanderDaily": { "input": 40000, "output": 4000 },
+	"stages": [
+		{ "id": "research", "days": 2, "calls": 5, "input": 60000, "output": 6000 },
+		{ "id": "review", "days": 1, "calls": 3, "input": 40000, "output": 4000 },
+		{ "id": "marketing", "days": 1, "calls": 3, "input": 25000, "output": 4000 },
+		{ "id": "design", "days": 2, "calls": 3, "input": 20000, "output": 6000 },
+		{ "id": "listing", "days": 1, "calls": 2, "input": 15000, "output": 3000 }
+	],
+	"market": {
+		"medianPriceCents": 450,
+		"minPriceCents": 300,
+		"maxPriceCents": 900,
+		"baseViewsPerDay": 1.2,
+		"rampDays": 30,
+		"conversionRate": 0.015,
+		"medianSuccessRate": 0.08,
+		"hitMultiplier": 10,
+		"refundRate": 0.01,
+		"inspectionFailScale": 0.3,
+		"stuckChancePerDay": 0.03,
+		"seasonality": [1.35, 1.1, 0.95, 0.9, 0.9, 0.8, 0.8, 0.95, 1.05, 1.1, 1.4, 1.6]
+	},
+	"productNames": ["Weekly Planner", "Budget Tracker", "Habit Tracker", "Meal Planner", "Wedding Checklist", "Reading Log", "Fitness Log", "Cleaning Schedule", "Lesson Planner", "Gift List Organizer", "Travel Itinerary", "Goal Journal", "Bill Tracker", "Garden Planner", "Recipe Cards"]
+}

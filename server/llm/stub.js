@@ -1,0 +1,1 @@
+// AI NOTE: Deterministic fake brain for SIM mode: given observation, returns sensible next intent following the product pipeline (walk to required facility, act, deposit). Zero cost. Used by tests too.

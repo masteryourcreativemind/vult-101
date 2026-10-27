@@ -1,0 +1,1 @@
+// AI NOTE: trading_post handlers (Vault Door): createDraftListing, uploadImages, uploadFile, publishListing (requires approvalQueue approved OR AUTO_PUBLISH), syncListingStats. external:write -> SIM stub / DRY log-only / LIVE real.

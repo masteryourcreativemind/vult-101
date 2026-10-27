@@ -1,0 +1,8 @@
+{
+  "_notes": [
+    "AI NOTE: LOCKED. Product types the system can make. Digital only to start.",
+    "Shape: {id, name, etsyTaxonomyId (look up via Etsy SellerTaxonomy API, don't guess), files:[{format:'png'|'pdf'|'svg'|'zip', sizes/ratios, dpi}], mockupTemplate, defaultPriceRange}",
+    "Starter ids: wall_art_printable (ratios 2:3,3:4,4:5,ISO A, 300dpi), planner_pdf, sticker_png_pack, svg_cut_file, phone_wallpaper, clipart_bundle."
+  ],
+  "types": []
+}

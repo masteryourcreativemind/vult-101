@@ -1,0 +1,1 @@
+// AI NOTE: Sprite build script: read palette.json + *.map.json (ASCII pixel grids, 1 char = 1 palette index, '.' = transparent) -> pack atlases -> write PNG + frame JSON into public/assets/*. Supports layer compositing (base body + class accessory) and palette swaps (skin/hair variety). PNG encoder: tiny zlib-based writer via node:zlib (no deps).

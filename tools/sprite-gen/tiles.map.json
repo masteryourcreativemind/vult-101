@@ -1,0 +1,7 @@
+{
+  "_notes": [
+    "AI NOTE: Tile pixel maps (16x16 ASCII grids) + legend for vault-map.json chars (e.g. '#'=wall, '.'=floor, 'D'=gear door, 'g'=grate, 'c'=carpet).",
+    "Walls: draw top face + front face for the aerial 3/4 look."
+  ],
+  "tiles": {}
+}

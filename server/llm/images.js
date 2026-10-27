@@ -1,0 +1,1 @@
+// AI NOTE: Image generation (IMAGE_MODEL) -> save PNG to data/products/<job>/art/. Request largest useful size; upscale/export happens in products/formats. SIM: generate placeholder pattern PNG locally.

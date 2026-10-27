@@ -1,0 +1,1 @@
+// AI NOTE: security handlers: ipCheck (safety/ipCheck blocklist + LLM), policyCheck, qualityCheck (image size/dpi/format sanity) -> item 'verdict' pass|fail+reasons. Fail -> job 'rejected', reasons go to archive.

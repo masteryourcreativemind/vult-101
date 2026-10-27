@@ -1,0 +1,1 @@
+// AI NOTE: Etsy OAuth2 + PKCE: /oauth/etsy/start makes verifier+challenge(S256)+state, redirects to https://www.etsy.com/oauth/authorize with scopes "listings_r listings_w shops_r transactions_r". Callback validates state, exchanges code at https://openapi.etsy.com/oauth/token. Store tokens in data/secrets/etsy-tokens.json (0600). Auto-refresh before expiry.

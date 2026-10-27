@@ -1,0 +1,1 @@
+// AI NOTE: APPROVALS tab: cards with listing preview (images via /products/:id/*, title, price, tags, inspector verdict, cost so far). Approve/Reject buttons -> POST /api/approvals/:id. Badge count in tab.

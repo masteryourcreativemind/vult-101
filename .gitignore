@@ -1,0 +1,8 @@
+# NOTE: secrets, runtime state, generated products never committed.
+node_modules/
+.env
+data/*
+!data/.gitkeep
+!data/NOTES.md
+*.log
+.DS_Store

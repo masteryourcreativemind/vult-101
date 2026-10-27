@@ -1,0 +1,1 @@
+// AI NOTE: Export sellable files from artwork per product-types.json: resize/crop to ratios at 300dpi, PDF wrapper for printables, SVG only when source is vector, ZIP bundle. Pick minimal libs (pngjs/pdf-lib?) after Context7 check; Etsy file count/size limits apply.

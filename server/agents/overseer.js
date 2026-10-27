@@ -1,0 +1,1 @@
+// AI NOTE: The Overseer (boss). Physical dweller in overseer_office. Cycle: summarize world + ledger + archive + job board -> OVERSEER_MODEL -> orders[] {dwellerId, goal, jobId?, priority}. Can requestHire, retire niches, set focus product types. Orders delivered via an in-game "intercom" (instant) but issuing requires being in the office.

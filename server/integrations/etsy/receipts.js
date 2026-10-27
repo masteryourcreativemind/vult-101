@@ -1,0 +1,1 @@
+// AI NOTE: Shop receipts/transactions (transactions_r) + payment/fee data for the ledger. Incremental sync with min_created cursor stored in data/state.json. Verify endpoint names via Context7 /etsy/open-api.

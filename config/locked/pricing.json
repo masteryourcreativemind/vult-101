@@ -1,0 +1,31 @@
+{
+	"_note": "AI NOTE: List prices fetched 2026-10-24 from the cited pages. Entries with verified=false are assumptions to confirm before live use.",
+	"verifiedOn": "2026-10-24",
+	"models": [
+		{ "id": "gpt-6.1-sol", "name": "GPT-6.1 Sol", "vendor": "OpenAI", "inputPerMTok": 2.0, "cachedPerMTok": 0.1, "outputPerMTok": 10.0, "quality": 0.82, "copilotPlans": [], "source": "https://openai.com/api/pricing/" },
+		{ "id": "gpt-6-astra", "name": "GPT-6 Astra", "vendor": "OpenAI", "inputPerMTok": 10.0, "cachedPerMTok": 1.0, "outputPerMTok": 50.0, "quality": 0.92, "copilotPlans": [], "source": "https://openai.com/api/pricing/" },
+		{ "id": "gpt-6-luna", "name": "GPT-6 Luna", "vendor": "OpenAI", "inputPerMTok": 0.1, "cachedPerMTok": 0.01, "outputPerMTok": 0.5, "quality": 0.55, "copilotPlans": ["pro", "pro-plus", "max"], "source": "https://openai.com/api/pricing/" },
+		{ "id": "gemini-4-argon", "name": "Gemini 4 Argon", "vendor": "Google", "inputPerMTok": 2.0, "cachedPerMTok": 0.1, "outputPerMTok": 10.0, "quality": 0.84, "copilotPlans": [], "priceChanges": [{ "from": "2026-12-01", "inputPerMTok": 4.0, "cachedPerMTok": 0.2, "outputPerMTok": 20.0 }], "source": "https://ai.google.dev/gemini-api/docs/pricing" },
+		{ "id": "gemini-3.8-flash", "name": "Gemini 3.8 Flash", "vendor": "Google", "inputPerMTok": 0.75, "cachedPerMTok": 0.075, "outputPerMTok": 3.75, "quality": 0.68, "copilotPlans": ["pro", "pro-plus", "max"], "priceChanges": [{ "from": "2027-01-01", "inputPerMTok": 1.5, "cachedPerMTok": 0.15, "outputPerMTok": 7.5 }], "source": "https://ai.google.dev/gemini-api/docs/pricing" },
+		{ "id": "gemini-3.5-flash-lite", "name": "Gemini 3.5 Flash-Lite", "vendor": "Google", "inputPerMTok": 0.3, "cachedPerMTok": 0.03, "outputPerMTok": 2.5, "quality": 0.5, "copilotPlans": [], "source": "https://ai.google.dev/gemini-api/docs/pricing" }
+	],
+	"plans": [
+		{ "id": "none", "name": "No subscription (direct API billing)", "monthlyCents": 0, "creditsCents": 0 },
+		{ "id": "pro", "name": "Copilot Pro", "monthlyCents": 1000, "creditsCents": 1500 },
+		{ "id": "pro-plus", "name": "Copilot Pro+", "monthlyCents": 3900, "creditsCents": 7000 },
+		{ "id": "max", "name": "Copilot Max", "monthlyCents": 10000, "creditsCents": 20000 }
+	],
+	"plansSource": "https://docs.github.com/en/copilot/concepts/billing/individual-plans",
+	"creditNote": "One GitHub AI credit is treated as $0.01 of list-price usage; additional usage beyond the allowance is $0.01 per credit.",
+	"etsy": {
+		"listingFeeCents": 20,
+		"listingLifeDays": 120,
+		"transactionRate": 0.065,
+		"source": "https://help.etsy.com/hc/en-us/articles/360035902374",
+		"processingRate": 0.03,
+		"processingFixedCents": 25,
+		"processingVerified": false,
+		"shopSetupFeeCents": 1500,
+		"shopSetupVerified": false
+	}
+}
