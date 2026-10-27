@@ -23,7 +23,7 @@ async function readJSON(request) {
     return body;
 }
 
-export function createRoutes({ snapshot, csrfToken, instructions, approvals, permissions, research, control, gate, hub, notify, instructionSaved, game }) {
+export function createRoutes({ snapshot, csrfToken, instructions, approvals, permissions, research, copilotRuntime, control, gate, hub, notify, instructionSaved, game }) {
     return async function route(request, response) {
         response.setHeader('X-Content-Type-Options', 'nosniff');
         response.setHeader('Referrer-Policy', 'no-referrer');
@@ -63,6 +63,24 @@ export function createRoutes({ snapshot, csrfToken, instructions, approvals, per
                     const order = research.createOrder(body);
                     notify();
                     return sendJSON(response, 201, order);
+                }
+                if (pathname === '/api/copilot/login') {
+                    if (Object.keys(body).length) throw Object.assign(new Error('Copilot login does not accept request fields.'), { status: 400 });
+                    if (permissions.list().find(connector => connector.id === 'copilot')?.permissionDecision !== 'OWNER_APPROVED_SETUP_ONLY') {
+                        throw Object.assign(new Error('Approve the Copilot setup request in Commissioning first.'), { status: 403 });
+                    }
+                    const result = await copilotRuntime.requestLogin();
+                    notify();
+                    return sendJSON(response, 202, result);
+                }
+                if (pathname === '/api/copilot/models') {
+                    if (Object.keys(body).length) throw Object.assign(new Error('Model discovery does not accept request fields.'), { status: 400 });
+                    if (permissions.list().find(connector => connector.id === 'copilot')?.permissionDecision !== 'OWNER_APPROVED_SETUP_ONLY') {
+                        throw Object.assign(new Error('Approve the Copilot setup request in Commissioning first.'), { status: 403 });
+                    }
+                    const result = await copilotRuntime.listModels();
+                    notify();
+                    return sendJSON(response, 200, result);
                 }
                 const permission = /^\/api\/permissions\/([a-z]+)$/.exec(pathname);
                 if (permission) {

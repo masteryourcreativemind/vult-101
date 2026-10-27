@@ -1,8 +1,9 @@
 // AI NOTE: Local-only composition root; uncommissioned live integrations must never start work.
 import { createServer } from 'node:http';
 import { randomBytes } from 'node:crypto';
+import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { loadConfig } from './config.js';
+import { loadConfig, projectRoot } from './config.js';
 import { openStore, recordEvent } from './storage/db.js';
 import { createOperationJournal } from './storage/operations.js';
 import { createControl } from './safety/control.js';
@@ -10,6 +11,7 @@ import { createBudget } from './safety/killSwitch.js';
 import { createApprovalQueue } from './safety/approvalQueue.js';
 import { createPermissionRequests } from './safety/permissions.js';
 import { createResearchWorkflow } from './coordination/research.js';
+import { createCopilotRuntime } from './integrations/copilot/runtime.js';
 import { createLedger } from './economy/ledger.js';
 import { createWorld, classes } from './sim/world.js';
 import { createTasks } from './coordination/tasks.js';
@@ -36,6 +38,11 @@ export function createApp(options = {}) {
     const instructions = createInstructions(config.instructionsRoot);
     const game = createGame(store);
     const research = createResearchWorkflow({ store, tasks });
+    const copilotRuntime = options.copilotRuntime ?? createCopilotRuntime({
+        baseDirectory: resolve(projectRoot, 'data/secrets/copilot'),
+        canSetup: () => permissions.list().find(connector => connector.id === 'copilot')?.permissionDecision === 'OWNER_APPROVED_SETUP_ONLY',
+        onChange: () => notify(),
+    });
     const gate = createActionGate({ store, world, tasks, control, budget });
     const movement = createMovement({ store, world, tasks, control });
     const recovery = createRecovery({ store, world, control, movement, gate, operations });
@@ -53,14 +60,14 @@ export function createApp(options = {}) {
             tasks: tasks.list().map(({ id, title, kind, facility, state, worker_id, attempts }) => ({ id, title, kind, facility, state, workerId: worker_id, attempts })),
             ledger: { ...ledger.totals(), entries: ledger.entries() }, approvals: approvals.list(),
             budgets: { cashDay: budget.getUsage(day, 'cash_cents'), cashMonth: budget.getUsage(month, 'cash_cents'), aiDay: budget.getUsage(day, 'ai_units'), aiMonth: budget.getUsage(month, 'ai_units') },
-            connectors: permissions.list(), researchOrders: research.list(), game: game.view(),
+            connectors: permissions.list(), researchOrders: research.list(), copilot: copilotRuntime.getStatus(), game: game.view(),
             events: store.database.prepare('SELECT sequence, kind, message, created_at FROM events ORDER BY sequence DESC LIMIT 100').all().map(row => ({ ...row })),
         };
     }
     function notify() { revision += 1; hub.broadcast(snapshot()); }
     const csrfToken = randomBytes(32).toString('hex');
     const server = createServer({ requestTimeout: 10000, headersTimeout: 10000, maxHeaderSize: 8192 }, createRoutes({
-        snapshot, csrfToken, instructions, approvals, permissions, research, control, gate, hub, notify, game,
+        snapshot, csrfToken, instructions, approvals, permissions, research, copilotRuntime, control, gate, hub, notify, game,
         instructionSaved(saved) { recordEvent(store, 'instructions', `Operator updated ${saved.classId} instructions.`, { classId: saved.classId, revision: saved.revision }); },
     }));
     const timer = setInterval(() => {
@@ -82,6 +89,7 @@ export function createApp(options = {}) {
             closed = true;
             clearInterval(timer);
             game.pause();
+            await copilotRuntime.close();
             if (control.get().state === 'RUNNING') control.suspend('Local server shut down.');
             gate.abortAll();
             hub.close();

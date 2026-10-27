@@ -13,7 +13,7 @@ The earlier scaffold claim that Copilot could not be embedded was wrong. GitHub 
 - Explicitly verify abort/disconnect. A response timeout or `sendAndWait` timeout is not proof that underlying inference stopped.
 - Count internal iterations, retries, compaction, and continuations within reserved usage; included credits are not unlimited calls or duplicate cash costs.
 
-Reference: <https://github.com/github/copilot-sdk>. The application currently has no installed SDK adapter or active model session.
+Reference: <https://github.com/github/copilot-sdk>. The app has an isolated, user-triggered sign-in and model-discovery adapter, but no active model session, worker runtime, or task-scoped tool configuration.
 
 ## Etsy
 

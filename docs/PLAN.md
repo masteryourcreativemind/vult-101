@@ -28,7 +28,8 @@ AI NOTE: The user authorized implementation after planning. Checked items descri
 
 ## 3. Restricted Copilot Adapter
 
-- [ ] Pin supported SDK/runtime; only the Overseer owns the authenticated provider client and top-level model session. Verify account authentication and discover the exact Overseer model and affordable subagent models.
+- [x] Pin the Copilot SDK; add isolated, owner-triggered browser sign-in and explicit account model discovery with sanitized process environment. No inference session is created.
+- [ ] Only the Overseer owns the authenticated provider client and top-level model session. Verify account entitlement and affordable worker models.
 - [ ] Implement workers as literal SDK-managed subagents created and supervised by the Overseer, not separate per-dweller provider clients or pretend/deterministic AI brains. Enforce task-scoped context, tool allowlists, usage limits, and no nested subagents.
 - [ ] Deny built-in shell/filesystem/network, ambient plugins/MCP/memory, arbitrary permissions, and nested untracked agents on create and resume.
 - [ ] Test explicit abort/disconnect and stale output fencing; a Promise timeout is not proof that remote inference stopped.

@@ -242,11 +242,24 @@ function render(next) {
     for (const connector of state.connectors) {
         const row = element('div', 'connector');
         const content = element('div');
-        content.append(element('strong', 'connector-name', connector.name), element('span', 'connector-status', label(connector.state)), element('span', 'connector-detail', connector.detail), element('span', 'connector-detail', `OWNER PERMISSION: ${label(connector.permissionDecision)}`));
+        const copilotStatus = connector.id === 'copilot' ? raw.copilot : undefined;
+        content.append(element('strong', 'connector-name', connector.name), element('span', 'connector-status', label(copilotStatus?.status ?? connector.state)), element('span', 'connector-detail', copilotStatus?.detail ?? connector.detail), element('span', 'connector-detail', `OWNER PERMISSION: ${label(connector.permissionDecision)}`));
         const permissionButton = element('button', 'button quiet connector-permission', connector.permissionDecision === 'NOT_REVIEWED' ? 'Review request' : 'Update decision');
         permissionButton.type = 'button';
         permissionButton.addEventListener('click', () => openPermissionRequest(connector));
         row.append(element('i', 'status-square'), content, permissionButton);
+        if (connector.id === 'copilot' && connector.permissionDecision === 'OWNER_APPROVED_SETUP_ONLY') {
+            const loginButton = element('button', 'button quiet connector-permission', ['AUTHENTICATED', 'MODELS_DISCOVERED'].includes(copilotStatus?.status) ? 'Reauthenticate' : 'Browser sign-in');
+            loginButton.type = 'button';
+            loginButton.disabled = copilotStatus?.status === 'LOGIN_PENDING';
+            loginButton.addEventListener('click', requestCopilotLogin);
+            const modelsButton = element('button', 'button quiet connector-permission', 'Check models');
+            modelsButton.type = 'button';
+            modelsButton.disabled = !['AUTHENTICATED', 'MODELS_DISCOVERED'].includes(copilotStatus?.status);
+            modelsButton.addEventListener('click', discoverCopilotModels);
+            row.append(loginButton, modelsButton);
+            if (copilotStatus?.models.length) content.append(element('span', 'connector-detail', `ACCOUNT MODELS: ${copilotStatus.models.map(model => model.id).join(', ')}`));
+        }
         connectors.append(row);
     }
     if (!byId('instruction-class').options.length) {
@@ -280,6 +293,20 @@ async function savePermissionDecision(decision) {
         notice(decision === 'APPROVE'
             ? 'Setup permission recorded only. Provider access and live execution remain disabled.'
             : 'Setup request declined. No provider access or live execution was changed.');
+    } catch (error) { notice(error.message); }
+}
+
+async function requestCopilotLogin() {
+    try {
+        await request('/api/copilot/login', {});
+        notice('GitHub Copilot sign-in opened in the browser using an isolated local profile. No model call or spending occurred.');
+    } catch (error) { notice(error.message); }
+}
+
+async function discoverCopilotModels() {
+    try {
+        const result = await request('/api/copilot/models', {});
+        notice(`${result.models.length} account-visible models found. No inference or paid model call was made.`);
     } catch (error) { notice(error.message); }
 }
 

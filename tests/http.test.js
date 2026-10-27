@@ -47,6 +47,36 @@ test('research orders require the operator token and queue five distinct tasks w
     assert.equal(state.connectors.every(connector => !connector.ready), true);
 });
 
+test('Copilot login and model discovery require owner setup approval and never infer', async context => {
+    let runtimeStatus = { status: 'NOT_CONNECTED', detail: 'Not started.', models: [], inferenceReady: false };
+    const calls = [];
+    const copilotRuntime = {
+        getStatus: () => runtimeStatus,
+        async requestLogin() { calls.push('login'); runtimeStatus = { ...runtimeStatus, status: 'AUTHENTICATED' }; return runtimeStatus; },
+        async listModels() { calls.push('models'); runtimeStatus = { ...runtimeStatus, status: 'MODELS_DISCOVERED', models: [{ id: 'gpt-test', name: 'Test Model' }] }; return runtimeStatus; },
+        async close() {},
+    };
+    const { url, headers } = await fixture(context, { copilotRuntime });
+    const loginPath = `${url}/api/copilot/login`;
+    const modelsPath = `${url}/api/copilot/models`;
+    assert.equal((await fetch(loginPath, { method: 'POST', headers, body: '{}' })).status, 403);
+    assert.equal((await fetch(modelsPath, { method: 'POST', headers, body: '{}' })).status, 403);
+    assert.deepEqual(calls, []);
+
+    const approved = await fetch(`${url}/api/permissions/copilot`, { method: 'POST', headers, body: JSON.stringify({ decision: 'APPROVE' }) });
+    assert.equal(approved.status, 200);
+    assert.equal((await fetch(loginPath, { method: 'POST', headers, body: '{}' })).status, 202);
+    const discovery = await fetch(modelsPath, { method: 'POST', headers, body: '{}' });
+    assert.equal(discovery.status, 200);
+    assert.deepEqual(calls, ['login', 'models']);
+    assert.equal((await discovery.json()).inferenceReady, false);
+    const state = await (await fetch(`${url}/api/state`)).json();
+    assert.equal(state.copilot.status, 'MODELS_DISCOVERED');
+    assert.equal(state.copilot.models[0].id, 'gpt-test');
+    assert.equal(state.connectors.find(connector => connector.id === 'copilot').ready, false);
+    assert.equal(state.campaign.state, 'SETUP');
+});
+
 test('cross-origin commands, missing tokens, arbitrary configuration, and live starts are rejected', async context => {
     const { url, headers } = await fixture(context);
     const body = JSON.stringify({ action: 'suspend' });

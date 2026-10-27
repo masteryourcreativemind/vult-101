@@ -43,7 +43,7 @@ AI NOTE: Contributor memory; keep implementation status accurate and distinguish
 
 ## Pending Before Live Work
 
-- No live action handlers or AI scheduler are registered. Copilot SDK/session isolation, verified models, allowance bounds, actual abort semantics, and provider admission must be implemented and tested.
+- No live action handlers or AI scheduler are registered. Isolated Copilot sign-in/model discovery exists, but restricted inference sessions, verified affordable models, allowance bounds, actual abort semantics, and provider admission remain pending.
 - Research provenance, author-bound artifact/review workflow, task-specific tool allowlists, physical handoffs, actual session reset/replacement, product creation/inspection, Etsy OAuth/writes, and receipt/invoice reconciliation remain pending.
 - Reconcile reservation-to-ledger charges, campaign attribution/taxes/settled payouts, subscription costs, and outstanding liabilities across period rollover before live spending or goal claims.
 - Existing integration/action/product modules may still be notes-only. Do not treat a placeholder, database table, or passing unit test as a completed external workflow.
