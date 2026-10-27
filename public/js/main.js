@@ -15,6 +15,7 @@ let editorRevision;
 let editorOriginal = '';
 let editorClass;
 let editorLoading = false;
+let permissionConnectorId;
 const panel = byId('operations-panel');
 const terminal = byId('terminal');
 const renderer = createRenderer(byId('vault'), byId('map-viewport'), select);
@@ -225,8 +226,11 @@ function render(next) {
     for (const connector of state.connectors) {
         const row = element('div', 'connector');
         const content = element('div');
-        content.append(element('strong', 'connector-name', connector.name), element('span', 'connector-status', label(connector.state)), element('span', 'connector-detail', connector.detail));
-        row.append(element('i', 'status-square'), content);
+        content.append(element('strong', 'connector-name', connector.name), element('span', 'connector-status', label(connector.state)), element('span', 'connector-detail', connector.detail), element('span', 'connector-detail', `OWNER PERMISSION: ${label(connector.permissionDecision)}`));
+        const permissionButton = element('button', 'button quiet connector-permission', connector.permissionDecision === 'NOT_REVIEWED' ? 'Review request' : 'Update decision');
+        permissionButton.type = 'button';
+        permissionButton.addEventListener('click', () => openPermissionRequest(connector));
+        row.append(element('i', 'status-square'), content, permissionButton);
         connectors.append(row);
     }
     if (!byId('instruction-class').options.length) {
@@ -240,6 +244,32 @@ function render(next) {
     renderPanel();
     renderSelection();
 }
+
+function openPermissionRequest(connector) {
+    permissionConnectorId = connector.id;
+    byId('permission-title').textContent = connector.name;
+    byId('permission-purpose').textContent = connector.purpose;
+    byId('permission-access').replaceChildren(...connector.requestedAccess.map(access => element('li', '', access)));
+    byId('permission-scope-status').textContent = connector.scopeStatus;
+    byId('permission-decision-status').textContent = `Current local decision: ${label(connector.permissionDecision)}`;
+    byId('permission-dialog').showModal();
+}
+
+async function savePermissionDecision(decision) {
+    if (!permissionConnectorId) return;
+    try {
+        await request(`/api/permissions/${permissionConnectorId}`, { decision });
+        byId('permission-dialog').close();
+        permissionConnectorId = undefined;
+        notice(decision === 'APPROVE'
+            ? 'Setup permission recorded only. Provider access and live execution remain disabled.'
+            : 'Setup request declined. No provider access or live execution was changed.');
+    } catch (error) { notice(error.message); }
+}
+
+byId('close-permission').addEventListener('click', () => byId('permission-dialog').close());
+byId('permission-approve').addEventListener('click', () => savePermissionDecision('APPROVE'));
+byId('permission-decline').addEventListener('click', () => savePermissionDecision('DECLINE'));
 
 for (const tab of document.querySelectorAll('[data-tab]')) {
     tab.addEventListener('click', () => {

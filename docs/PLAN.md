@@ -8,6 +8,7 @@ AI NOTE: The user authorized implementation after planning. Checked items descri
 - [x] SQLite migrations, synchronous transactions, durable suspension, append-only cash entries, and fenced task leases.
 - [x] Separate cash/AI reservations, daily/monthly admission, unknown-outcome holds, and overshoot suspension primitives.
 - [x] Action gate checks role, facility, station, session/task generation, connector, and exact-approval hook; reserves stations and limits concurrency to two.
+- [x] Local connector permission requests show intended access and persist owner approve/decline decisions. These decisions do not authenticate providers, set budgets, or enable execution.
 - [x] Fixed 16-body roster, five research desks/review seats, marketing seats, and recovery kitchen. Geometry and routes checked by `npm run check:map`.
 - [x] A* movement and deterministic escort/recovery state. No live provider session replacement is claimed.
 - [x] Payload-bound one-use approvals, immutable artifact storage constraints, and external-operation journal with unknown-outcome recovery.

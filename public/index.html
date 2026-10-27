@@ -81,6 +81,17 @@
 
 	<dialog id="confirm-suspension" class="confirm-dialog" aria-labelledby="suspension-title"><span class="eyebrow">OPERATOR AUTHORIZATION</span><h2 id="suspension-title">Stop the live trial?</h2><div class="confirmation-actions"><button id="cancel-suspension" class="button quiet">Cancel</button><button id="confirm-stop" class="button danger"><img src="/vendor/icons/square.svg" alt="">Suspend execution</button></div></dialog>
 
+	<dialog id="permission-dialog" class="terminal-dialog permission-dialog" aria-labelledby="permission-title">
+		<div class="dialog-heading"><div><span class="eyebrow">CONNECTOR PERMISSION REQUEST</span><h2 id="permission-title">Review access</h2></div><button id="close-permission" class="icon-button" title="Close permission request" aria-label="Close permission request"><img src="/vendor/icons/x.svg" alt=""></button></div>
+		<p id="permission-purpose"></p>
+		<strong>Requested access</strong>
+		<ul id="permission-access" class="permission-access"></ul>
+		<p id="permission-scope-status" class="subdued"></p>
+		<p id="permission-warning" class="warning">This records local owner permission to continue setup only. It does not sign in, share credentials, make API requests, authorize spending, or unlock work. Provider-level access must be granted separately through a verified provider consent flow.</p>
+		<div id="permission-decision-status" class="subdued" aria-live="polite"></div>
+		<div class="confirmation-actions"><button id="permission-decline" class="button quiet">Decline</button><button id="permission-approve" class="button primary">Approve setup request</button></div>
+	</dialog>
+
 	<dialog id="sim-setup" class="terminal-dialog" aria-labelledby="sim-setup-title">
 		<div class="dialog-heading"><div><span class="eyebrow">FAKE MONEY / REAL LIST PRICES</span><h2 id="sim-setup-title">New simulation</h2></div><button id="close-sim-setup" class="icon-button" title="Close" aria-label="Close simulation setup"><img src="/vendor/icons/x.svg" alt=""></button></div>
 		<div class="sim-form">

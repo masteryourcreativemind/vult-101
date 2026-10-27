@@ -9,7 +9,7 @@ import { createApp } from '../server/index.js';
 async function fixture(context, options = {}) {
     const directory = await mkdtemp(join(tmpdir(), 'vult-http-'));
     await writeFile(join(directory, 'researcher.md'), '# Original instructions\n');
-    const app = createApp({ ...options, databasePath: ':memory:', instructionsRoot: directory });
+    const app = createApp({ databasePath: ':memory:', ...options, instructionsRoot: directory });
     const url = await app.listen(0);
     context.after(async () => { await app.close(); await rm(directory, { recursive: true, force: true }); });
     const bootstrap = await (await fetch(`${url}/api/bootstrap`)).json();
@@ -37,6 +37,50 @@ test('cross-origin commands, missing tokens, arbitrary configuration, and live s
     assert.equal((await fetch(`${url}/api/budgets`, { method: 'POST', headers, body: '{}' })).status, 404);
     assert.equal((await fetch(`${url}/.env`)).status, 404);
     assert.equal((await fetch(`${url}/config/locked/classes.json`)).status, 404);
+});
+
+test('permission requests require the operator token and never commission a connector', async context => {
+    const { url, headers, bootstrap } = await fixture(context);
+    const initial = bootstrap.state.connectors.find(connector => connector.id === 'etsy');
+    assert.equal(initial.permissionDecision, 'NOT_REVIEWED');
+    assert.match(initial.scopeStatus, /not verified/i);
+
+    const path = `${url}/api/permissions/etsy`;
+    assert.equal((await fetch(path, { method: 'POST', headers: { Origin: url, 'Content-Type': 'application/json' }, body: JSON.stringify({ decision: 'APPROVE' }) })).status, 403);
+    assert.equal((await fetch(path, { method: 'POST', headers, body: JSON.stringify({ decision: 'APPROVE', token: 'unexpected' }) })).status, 400);
+    assert.equal((await fetch(`${url}/api/permissions/unknown`, { method: 'POST', headers, body: JSON.stringify({ decision: 'APPROVE' }) })).status, 404);
+
+    const approved = await fetch(path, { method: 'POST', headers, body: JSON.stringify({ decision: 'APPROVE' }) });
+    assert.equal(approved.status, 200);
+    const state = await (await fetch(`${url}/api/state`)).json();
+    const etsy = state.connectors.find(connector => connector.id === 'etsy');
+    assert.equal(etsy.permissionDecision, 'OWNER_APPROVED_SETUP_ONLY');
+    assert.equal(etsy.ready, false);
+    assert.equal(etsy.state, 'NOT_CONNECTED');
+    assert.equal(state.campaign.state, 'SETUP');
+
+    const declined = await fetch(`${url}/api/permissions/budget`, { method: 'POST', headers, body: JSON.stringify({ decision: 'DECLINE' }) });
+    assert.equal(declined.status, 200);
+    assert.equal((await declined.json()).permissionDecision, 'OWNER_DECLINED');
+});
+
+test('permission decisions persist across a local server restart', async context => {
+    const directory = await mkdtemp(join(tmpdir(), 'vult-permissions-'));
+    await writeFile(join(directory, 'researcher.md'), '# Original instructions\n');
+    const databasePath = join(directory, 'vault.sqlite');
+    let app = createApp({ databasePath, instructionsRoot: directory });
+    context.after(async () => { await app.close(); await rm(directory, { recursive: true, force: true }); });
+    const url = await app.listen(0);
+    const bootstrap = await (await fetch(`${url}/api/bootstrap`)).json();
+    const headers = { Origin: url, 'Content-Type': 'application/json', 'X-Vault-Token': bootstrap.token };
+    const decision = await fetch(`${url}/api/permissions/copilot`, { method: 'POST', headers, body: JSON.stringify({ decision: 'APPROVE' }) });
+    assert.equal(decision.status, 200);
+    await app.close();
+
+    app = createApp({ databasePath, instructionsRoot: directory });
+    const copilot = app.snapshot().connectors.find(connector => connector.id === 'copilot');
+    assert.equal(copilot.permissionDecision, 'OWNER_APPROVED_SETUP_ONLY');
+    assert.equal(copilot.ready, false);
 });
 
 test('instruction edits use a whitelist and optimistic revisions; suspension persists', async context => {

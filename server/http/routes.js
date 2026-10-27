@@ -23,7 +23,7 @@ async function readJSON(request) {
     return body;
 }
 
-export function createRoutes({ snapshot, csrfToken, instructions, approvals, control, gate, hub, notify, instructionSaved, game }) {
+export function createRoutes({ snapshot, csrfToken, instructions, approvals, permissions, control, gate, hub, notify, instructionSaved, game }) {
     return async function route(request, response) {
         response.setHeader('X-Content-Type-Options', 'nosniff');
         response.setHeader('Referrer-Policy', 'no-referrer');
@@ -57,6 +57,13 @@ export function createRoutes({ snapshot, csrfToken, instructions, approvals, con
                     gate.abortAll();
                     notify();
                     return sendJSON(response, 200, { campaign: control.get() });
+                }
+                const permission = /^\/api\/permissions\/([a-z]+)$/.exec(pathname);
+                if (permission) {
+                    if (Object.keys(body).some(key => key !== 'decision')) throw Object.assign(new Error('Unexpected permission fields.'), { status: 400 });
+                    const result = permissions.decide(permission[1], body.decision);
+                    notify();
+                    return sendJSON(response, 200, result);
                 }
                 const approval = /^\/api\/approvals\/([a-z0-9-]+)$/.exec(pathname);
                 if (approval) {

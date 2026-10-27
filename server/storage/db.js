@@ -9,7 +9,7 @@ export function openStore(filename = ':memory:') {
     if (filename !== ':memory:') chmodSync(filename, 0o600);
     database.exec('PRAGMA foreign_keys = ON; PRAGMA busy_timeout = 5000; PRAGMA journal_mode = WAL; PRAGMA synchronous = FULL;');
     const version = database.prepare('PRAGMA user_version').get().user_version;
-    if (version > 4) {
+    if (version > 5) {
         database.close();
         throw new Error('Database belongs to a newer application version.');
     }
@@ -131,6 +131,18 @@ export function openStore(filename = ':memory:') {
 			-- Fake-money game state; deliberately separate from the real ledger and budgets.
 			CREATE TABLE game (id INTEGER PRIMARY KEY CHECK (id = 1), state TEXT NOT NULL, updated_at TEXT NOT NULL) STRICT;
 			PRAGMA user_version = 4;
+			COMMIT;
+		`);
+    }
+    if (version < 5) {
+        database.exec(`
+			BEGIN IMMEDIATE;
+			CREATE TABLE connector_permissions (
+				connector_id TEXT PRIMARY KEY CHECK (connector_id IN ('copilot', 'models', 'etsy', 'budget')),
+				decision TEXT NOT NULL CHECK (decision IN ('OWNER_APPROVED_SETUP_ONLY', 'OWNER_DECLINED')),
+				decided_at TEXT NOT NULL
+			) STRICT;
+			PRAGMA user_version = 5;
 			COMMIT;
 		`);
     }

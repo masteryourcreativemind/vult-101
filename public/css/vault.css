@@ -486,6 +486,39 @@ canvas {
 	line-height: 1.7;
 	overflow-wrap: anywhere
 }
+.connector-permission {
+	grid-column: 2;
+	justify-self: start;
+	min-height: 32px;
+	margin-top: 2px
+}
+.permission-dialog > p,
+.permission-dialog > strong,
+.permission-dialog > ul,
+.permission-dialog > div:not(.dialog-heading) {
+	margin-left: 24px;
+	margin-right: 24px
+}
+.permission-dialog > p:first-of-type {
+	margin-top: 20px;
+	line-height: 1.7
+}
+.permission-dialog > strong {
+	display: block;
+	font-size: 11px
+}
+.permission-access {
+	padding-left: 20px;
+	line-height: 1.7
+}
+.permission-dialog .warning {
+	font-size: 11px;
+	line-height: 1.7
+}
+.permission-dialog .confirmation-actions {
+	flex-wrap: wrap;
+	margin-bottom: 24px
+}
 .console-section {
 	border-left: 1px solid var(--line);
 	padding-left: 24px;
@@ -1016,6 +1049,16 @@ select {
 	}
 	.terminal-dialog {
 		width: calc(100% - 20px)
+	}
+	.permission-dialog > p,
+	.permission-dialog > strong,
+	.permission-dialog > ul,
+	.permission-dialog > div:not(.dialog-heading) {
+		margin-left: 16px;
+		margin-right: 16px
+	}
+	.permission-dialog .confirmation-actions {
+		justify-content: stretch
 	}
 	.dialog-heading {
 		padding: 16px
